@@ -39,7 +39,7 @@ app.get('/health', (req, res) => {
 });
 
 // ✅ Self-ping every 13 minutes — backup keep-alive (no extra file needed)
-const BACKEND_URL = 'https://steveobizzstore.onrender.com/health';
+const BACKEND_URL = 'https://familyhousesupermarket.onrender.com/health';
 const PING_INTERVAL = 13 * 60 * 1000;
 
 const pingServer = async () => {
