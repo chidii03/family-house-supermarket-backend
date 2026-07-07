@@ -14,12 +14,12 @@ export const sendOrderReceipt = async (order, items) => {
   const itemsHtml = items.map(i => `<li>${i.qty}x ${i.product_name} - ₦${i.price}</li>`).join('');
   
   const mailOptions = {
-    from: '"Steve O Bizz Store" <noreply@steveobizz.com>',
+    from: '"Family House Supermarket" <noreply@familyhousesupermarket.com>',
     to: order.customer_email,
     subject: `Order Confirmed: ${order.order_id}`,
     html: `
       <div style="font-family: sans-serif; padding: 20px; border: 1px solid #ddd;">
-        <h2 style="color: #000;">Thank you for your order!</h2>
+        <h2 style="color: #d71920;">Thank you for shopping with Family House Supermarket!</h2>
         <p>Hello ${order.customer_name},</p>
         <p>We have received your payment. Your Tracking ID is: <strong>${order.order_id}</strong></p>
         

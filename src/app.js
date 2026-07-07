@@ -14,7 +14,7 @@ const app = express();
 // Security & CORS – single configuration
 app.use(helmet());
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://steveobizzstore.vercel.app'],
+  origin: ['http://localhost:3000', 'https://familyhousesupermarket.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));

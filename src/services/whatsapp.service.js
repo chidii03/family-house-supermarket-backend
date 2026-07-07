@@ -6,7 +6,7 @@ const client = twilio(env.TWILIO_SID, env.TWILIO_AUTH_TOKEN);
 
 export const notifySeller = async (order) => {
   const message =
-    `🔔 *NEW ORDER - STEVE OBIZZ Store* \n\n` +
+    `🔔 *NEW ORDER - FAMILY HOUSE SUPERMARKET* \n\n` +
     `*ID:* ${order.order_id}\n` +
     `*Amount:* ₦${order.amount.toLocaleString()}\n` +
     `*Customer:* ${order.customer_name}\n` +

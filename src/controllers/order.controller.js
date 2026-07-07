@@ -29,7 +29,7 @@ export const createOrder = async (req, res) => {
                 email: email,
                 amount: Math.round(amount * 100), // Kobo conversion
                 reference: orderId,
-                callback_url: `https://steveobizzstore.vercel.app/order-success?id=${orderId}`,
+                callback_url: `${process.env.FRONTEND_URL || 'https://www.familyhousesupermarket.com'}/order-success?id=${orderId}`,
                 metadata: { fullName, phone }
             },
             {
@@ -111,20 +111,20 @@ export const handleWebhook = async (req, res) => {
             `).join('');
 
             const mailOptions = {
-                from: `"Steve O Bizz Store" <${process.env.EMAIL_USER}>`,
+                from: `"Family House Supermarket" <${process.env.EMAIL_USER}>`,
                 to: order.email,
                 subject: `Order Confirmed: #${reference}`,
                 html: `
                     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; padding: 20px;">
                         <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                            <div style="background: #2563eb; padding: 30px; text-align: center; color: white;">
+                            <div style="background: #d71920; padding: 30px; text-align: center; color: white;">
                                 <h1 style="margin: 0; font-size: 24px;">Order Confirmed!</h1>
-                                <p style="margin-top: 10px; opacity: 0.9;">Thank you for shopping with Steve O Bizz.</p>
+                                <p style="margin-top: 10px; opacity: 0.9;">Thank you for shopping with Family House Supermarket.</p>
                             </div>
                             <div style="padding: 30px;">
                                 <p style="font-size: 16px; color: #4a5568;">Hi <strong>${order.customer_name}</strong>,</p>
                                 <p style="color: #4a5568; line-height: 1.6;">Your payment was successful. Below is your official receipt.</p>
-                                <div style="background: #f8fafc; border-left: 4px solid #2563eb; padding: 20px; margin: 25px 0;">
+                                <div style="background: #fff8df; border-left: 4px solid #d71920; padding: 20px; margin: 25px 0;">
                                     <p style="margin: 0; font-size: 14px; color: #64748b;">Order Number</p>
                                     <p style="margin: 0; font-size: 18px; font-weight: bold; color: #1e293b;">#${reference}</p>
                                     <p style="margin: 15px 0 0 0; font-size: 14px; color: #64748b;">Estimated Delivery</p>
@@ -141,7 +141,7 @@ export const handleWebhook = async (req, res) => {
                                 </table>
                                 <div style="text-align: right; border-top: 2px solid #edf2f7; padding-top: 20px;">
                                     <p style="margin: 0; color: #64748b;">Total Amount Paid</p>
-                                    <h2 style="margin: 0; color: #2563eb; font-size: 28px;">₦${order.total_amount.toLocaleString()}</h2>
+                                    <h2 style="margin: 0; color: #d71920; font-size: 28px;">₦${order.total_amount.toLocaleString()}</h2>
                                 </div>
                                 <div style="margin-top: 40px; padding: 20px; border: 1px dashed #cbd5e1; border-radius: 8px;">
                                     <h4 style="margin: 0 0 10px 0; color: #475569;">Delivery Details</h4>
@@ -153,7 +153,7 @@ export const handleWebhook = async (req, res) => {
                                 </div>
                             </div>
                             <div style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 12px; color: #94a3b8;">
-                                <p>&copy; ${new Date().getFullYear()} Steve O Bizz Store. All rights reserved.</p>
+                                <p>&copy; ${new Date().getFullYear()} Family House Supermarket. All rights reserved.</p>
                             </div>
                         </div>
                     </div>
