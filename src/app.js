@@ -30,7 +30,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 
 app.get('/', (req, res) => {
-  res.send('🚀 Stephen Online Store API is running smoothly!');
+  res.send('🚀 Family House SuperMarket Online Store API is running smoothly!');
 });
 
 // ✅ Health check endpoint — used by cron-job.org to keep server awake
