@@ -39,14 +39,34 @@ app.get('/health', (req, res) => {
 });
 
 // ✅ Self-ping every 13 minutes — backup keep-alive (no extra file needed)
-const BACKEND_URL = 'https://familyhousesupermarket.onrender.com/health';
+const BACKEND_URL =
+  process.env.BACKEND_URL ||
+  (process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/health`
+    : 'http://localhost:8080/health');
+
 const PING_INTERVAL = 13 * 60 * 1000;
 
 const pingServer = async () => {
   try {
     const res = await fetch(BACKEND_URL);
+
+    if (!res.ok) {
+      console.error(`[Keep-Alive] ❌ Ping failed: HTTP ${res.status} ${res.statusText}`);
+      return;
+    }
+
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      const text = await res.text();
+      console.error(`[Keep-Alive] ❌ Ping failed: expected JSON, got "${text.slice(0, 100)}"`);
+      return;
+    }
+
     const data = await res.json();
-    console.log(`[Keep-Alive] ✅ Awake at ${new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos' })} — ${data.status}`);
+    console.log(
+      `[Keep-Alive] ✅ Awake at ${new Date().toLocaleTimeString('en-NG', { timeZone: 'Africa/Lagos' })} — ${data.status}`
+    );
   } catch (err) {
     console.error(`[Keep-Alive] ❌ Ping failed: ${err.message}`);
   }
