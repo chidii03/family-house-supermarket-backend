@@ -28,5 +28,5 @@ for (const [key, value] of Object.entries(required)) {
 export const env = {
   ...required,
   ...optional,
-  NODE_ENV: process.env.NODE_ENV || 'development',
+  NODE_ENV: process.env.NODE_ENV || 'production',
 };
