@@ -46,7 +46,6 @@ export const updateOrderStatus = async (req, res) => {
 
 // ── GET /api/admin/debug ──────────────────────────────────────────────────────
 // Open this URL in your browser to verify DB is working:
-// https://steveobizzstore.onrender.com/api/admin/debug
 export const debugOrders = async (req, res) => {
   try {
     const count  = await db.execute("SELECT COUNT(*) as total FROM orders");
