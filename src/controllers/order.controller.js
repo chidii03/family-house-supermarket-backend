@@ -92,7 +92,7 @@ export const verifyPayment = async (req, res) => {
 
         if (isSuccessful) {
             await db.execute({
-                sql: "UPDATE orders SET status = 'PAID' WHERE order_id = ?",
+                sql: "UPDATE orders SET status = 'DELIVERED' WHERE order_id = ?",
                 args: [reference]
             });
         }
@@ -119,7 +119,7 @@ export const handleWebhook = async (req, res) => {
         try {
             // Update status
             await db.execute({
-                sql: "UPDATE orders SET status = 'PAID' WHERE order_id = ?",
+                sql: "UPDATE orders SET status = 'DELIVERED' WHERE order_id = ?",
                 args: [reference]
             });
 

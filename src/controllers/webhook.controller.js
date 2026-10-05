@@ -18,9 +18,9 @@ export const paystackWebhook = async (req, res) => {
     const reference = event.data.reference;
     
     try {
-        // Update Order to PAID
+        // A successful payment completes the order for the admin dashboard.
         const updateResult = await db.execute({
-            sql: "UPDATE orders SET status = 'PAID' WHERE reference = ? OR order_id = ?",
+            sql: "UPDATE orders SET status = 'DELIVERED' WHERE reference = ? OR order_id = ?",
             args: [reference, reference]
         });
 
