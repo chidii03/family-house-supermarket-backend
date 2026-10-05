@@ -1,9 +1,9 @@
 import app from './app.js';
 import './db/init.js';
 
-// Debug: Log all environment variables Railway sees (except secrets)
+// Debug: Log all environment variables RENDER sees (except secrets)
 console.log("Checking Environment...");
-console.log("RAILWAY PORT PROVIDED:", process.env.PORT);
+console.log("RENDER PORT PROVIDED:", process.env.PORT);
 
 const PORT = process.env.PORT || 5000; 
 

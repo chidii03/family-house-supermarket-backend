@@ -53,7 +53,11 @@ export const createOrder = async (req, res) => {
             }))
         ], "write");
 
-        res.status(201).json({ success: true, checkoutUrl: paystackRes.data.data.authorization_url });
+        res.status(201).json({
+            success: true,
+            orderId,
+            checkoutUrl: paystackRes.data.data.authorization_url
+        });
 
     } catch (error) {
         console.error("Paystack Error Detail:", error.response?.data || error.message);
@@ -64,7 +68,43 @@ export const createOrder = async (req, res) => {
     }
 };
 
-// --- 3. PAYSTACK WEBHOOK & NEW EMAIL TEXT ---
+// --- 3. VERIFY PAYSTACK REDIRECT ---
+export const verifyPayment = async (req, res) => {
+    const { reference } = req.params;
+
+    if (!reference) {
+        return res.status(400).json({ success: false, error: 'Payment reference is required' });
+    }
+
+    try {
+        const paystackRes = await axios.get(
+            `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        const transaction = paystackRes.data.data;
+        const isSuccessful = transaction.status === 'success' && transaction.reference === reference;
+
+        if (isSuccessful) {
+            await db.execute({
+                sql: "UPDATE orders SET status = 'PAID' WHERE order_id = ?",
+                args: [reference]
+            });
+        }
+
+        return res.json({ success: isSuccessful, status: transaction.status });
+    } catch (error) {
+        console.error('Paystack Verification Error:', error.response?.data || error.message);
+        return res.status(502).json({ success: false, error: 'Could not verify payment' });
+    }
+};
+
+// --- 4. PAYSTACK WEBHOOK & NEW EMAIL TEXT ---
 export const handleWebhook = async (req, res) => {
     const event = req.body;
 
@@ -170,7 +210,7 @@ export const handleWebhook = async (req, res) => {
     res.sendStatus(200);
 };
 
-// --- 4. TRACK ORDER ---
+// --- 5. TRACK ORDER ---
 export const trackOrder = async (req, res) => {
     const { trackingId } = req.params;
     try {

@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-
 import paymentRoutes from './routes/payment.routes.js';
 import webhookRoutes from './routes/webhook.routes.js';
 import adminRoutes from './routes/admin.routes.js';
@@ -37,8 +36,8 @@ app.get('/health', (req, res) => {
 // ✅ Self-ping every 13 minutes — backup keep-alive (no extra file needed)
 const BACKEND_URL =
   process.env.BACKEND_URL ||
-  (process.env.RAILWAY_PUBLIC_DOMAIN
-    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/health`
+  (process.env.RENDER_PUBLIC_DOMAIN
+    ? `https://${process.env.RENDER_PUBLIC_DOMAIN}/health`
     : 'http://localhost:8080/health');
 
 const PING_INTERVAL = 13 * 60 * 1000;

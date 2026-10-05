@@ -7,7 +7,7 @@ const required = {
   EMAIL_PASS: process.env.EMAIL_PASS,
   TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
   TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
-  FRONTEND_URL: process.env.FRONTEND_URL || "https://familyhousesupermarket.com",
+  FRONTEND_URL: process.env.FRONTEND_URL || "https://www.familyhousesupermarket.com",
 };
 
 // Optional Twilio vars – we'll check before using
