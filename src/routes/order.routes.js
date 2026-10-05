@@ -1,16 +1,15 @@
 import express from 'express';
-import { createOrder, handleWebhook, trackOrder, verifyPayment } from '../controllers/order.controller.js';
+import { createOrder, trackOrder, verifyOrderPayment } from '../controllers/order.controller.js';
+import { paystackWebhook } from '../controllers/webhook.controller.js';
 
 const router = express.Router();
 
 // POST: https://steveobizzstore.onrender.com/api/orders/create
 router.post('/create', createOrder);
 
-// GET: https://steveobizzstore.onrender.com/api/orders/verify/:reference
-router.get('/verify/:reference', verifyPayment);
-
 // POST: https://steveobizzstore.onrender.com/api/orders/webhook (Point Paystack)
-router.post('/webhook', handleWebhook);
+router.post('/webhook', paystackWebhook);
+router.get('/verify/:reference', verifyOrderPayment);
 
 // GET: https://steveobizzstore.onrender.com/api/orders/track/:trackingId
 router.get('/track/:trackingId', trackOrder);

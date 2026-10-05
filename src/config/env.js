@@ -7,7 +7,9 @@ const required = {
   EMAIL_PASS: process.env.EMAIL_PASS,
   TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
   TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
-  FRONTEND_URL: process.env.FRONTEND_URL || "https://www.familyhousesupermarket.com",
+  FRONTEND_URL: process.env.FRONTEND_URL || "https://steveobizzstore.vercel.app",
+  PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
+  ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
 };
 
 // Optional Twilio vars – we'll check before using
@@ -28,5 +30,5 @@ for (const [key, value] of Object.entries(required)) {
 export const env = {
   ...required,
   ...optional,
-  NODE_ENV: process.env.NODE_ENV || 'production',
+  NODE_ENV: process.env.NODE_ENV || 'development',
 };
